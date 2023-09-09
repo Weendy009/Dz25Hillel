@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление заказов и товаров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 24px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        form {
+            width: 300px;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #444;
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            color: #fff;
+        }
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Добавление заказов и товаров</h1>
+
+<div>
+    <h2>Добавить заказ</h2>
+    <form action="/addOrder" method="POST" th:object="${orders}">
+        <label for="selectedProducts">Выберите товары:</label>
+        <select multiple="multiple" id="selectedProducts" name="selectedProducts" required>
+            <option th:each="product : ${allProducts}" th:value="${product.id}" th:text="${product.name + ' - ' + product.cost}"></option>
+        </select>
+        <br>
+        <input type="submit" value="Добавить заказ">
+    </form>
+</div>
+
+<div>
+    <h2>Добавить товар</h2>
+    <form action="/addProduct" method="POST" th:object="${product}">
+        <label for="productName">Название товара:</label>
+        <input type="text" id="productName" name="productName" required th:field="${product.name}">
+        <br>
+        <label for="productCost">Стоимость товара:</label>
+        <input type="number" id="productCost" name="productCost" step="0.01" required th:field="${product.cost}">
+        <br>
+        <input type="submit" value="Добавить товар">
+    </form>
+</div>
+
+</body>
+</html>
